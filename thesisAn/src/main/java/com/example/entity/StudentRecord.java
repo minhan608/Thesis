@@ -14,8 +14,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table (name = "student")
-public class Student {
+@Table (name = "student_record")
+public class StudentRecord {
 
     @Id
     private  Integer id;
@@ -23,13 +23,14 @@ public class Student {
     private String studentId;
 
     @NotNull
-    private String name;
+    private String studentName;
 
     @Enumerated(EnumType.STRING)
     private StudentStatus studentStatus;
 
     @NotNull
-    private String semester;
+    private Integer semester;
 
-    private String year;
+    @NotNull
+    private Integer year;
 }

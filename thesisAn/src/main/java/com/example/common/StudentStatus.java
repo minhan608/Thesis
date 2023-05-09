@@ -9,6 +9,6 @@ public enum StudentStatus {
 
     STUDYING("Studying"),
     RESERVED("Reserved"),
-    ABSENT("Absent");
+    ABSENT("Quit");
     private String name;
 }
