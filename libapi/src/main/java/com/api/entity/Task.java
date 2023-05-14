@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -21,6 +22,7 @@ import java.util.Date;
 public class Task {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     @NotNull
@@ -30,7 +32,9 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskType taskType;
 
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
-    private LocalDateTime  updatedAt;
+    private LocalDate  updatedAt;
+
+    private String comment;
 }

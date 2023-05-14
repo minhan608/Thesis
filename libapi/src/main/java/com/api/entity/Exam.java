@@ -18,6 +18,7 @@ import java.time.LocalDate;
 public class Exam {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,8 +32,8 @@ public class Exam {
     private LocalDate examDate;
 
     @Column(name = "semester")
-    private String semester;
+    private Integer semester;
 
     @Column(name = "status")
-    private String status;
+    private Integer status;
 }

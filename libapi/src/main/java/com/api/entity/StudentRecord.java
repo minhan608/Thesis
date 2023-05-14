@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 public class StudentRecord {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private  Integer id;
     @NotNull
     private String studentId;
