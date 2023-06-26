@@ -29,8 +29,9 @@ public class Task {
     private String name;
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
-    @Enumerated(EnumType.STRING)
-    private TaskType taskType;
+
+    @NotNull
+    private LocalDateTime deadline;
 
     private LocalDate createdAt;
 

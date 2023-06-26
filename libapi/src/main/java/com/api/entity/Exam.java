@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import com.api.common.ExamStatus;
+
 import java.time.LocalDate;
 
 
@@ -21,9 +24,12 @@ public class Exam {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "teacher_id")
+    // private Teacher teacher;
+
+    @Column(name = "teacher")
+    private String teacher;
 
     @Column(name = "subject_name")
     private String subjectName;
@@ -35,5 +41,5 @@ public class Exam {
     private Integer semester;
 
     @Column(name = "status")
-    private Integer status;
+    private ExamStatus status;
 }

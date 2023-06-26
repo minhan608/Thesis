@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TaskStatus {
 
-    INPROGRESS("In progress"),
+    IN_PROGRESS("In progress"),
     TODO("Todo"),
     DONE("Done"),
     PENDING("Pending");

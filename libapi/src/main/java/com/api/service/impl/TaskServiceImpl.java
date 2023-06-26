@@ -5,6 +5,7 @@ import com.api.dto.task.TaskDto;
 import com.api.dto.task.ViewTaskDto;
 import com.api.entity.Task;
 import com.api.entity.User;
+import com.api.exception.GlobalException;
 import com.api.repository.TaskRepository;
 import com.api.repository.UserRepository;
 import com.api.service.TaskService;
@@ -12,10 +13,12 @@ import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Slf4j
 @Service
@@ -28,8 +31,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public ViewTaskDto createTask(TaskDto taskDto) {
-        LocalDate currentDate = LocalDate.now();
-        Task newTask = Task.builder().createdAt(LocalDate.now()).updatedAt(LocalDate.now()).build();
+      LocalDate current = LocalDate.now();
+        Task newTask = Task.builder().createdAt(current).updatedAt(current).build();
         TaskConverter.mapTaskDtoToTask(taskDto , newTask);
         taskRepository.save(newTask);
         return TaskConverter.convertTaskToViewDTO(newTask);
@@ -40,9 +43,10 @@ public class TaskServiceImpl implements TaskService {
 
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task not found"));
-
+        
+        LocalDate current = LocalDate.now();
         TaskConverter.mapTaskDtoToTask(taskDto, task);
-        task.setUpdatedAt(LocalDate.now());
+        task.setUpdatedAt(current);
         task = taskRepository.save(task);
         return TaskConverter.convertTaskToViewDTO(task);
     }
@@ -50,7 +54,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTask(Integer id) throws NotFoundException {
         if (!taskRepository.existsById(id)) {
-            throw new NotFoundException("Task not found");
+            throw new GlobalException("Task not found", "Task not found", HttpStatus.NOT_FOUND);
         }
         taskRepository.deleteById(id);
     }

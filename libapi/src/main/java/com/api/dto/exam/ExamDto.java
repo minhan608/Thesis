@@ -4,6 +4,7 @@ import com.api.entity.Teacher;
 
 import javax.persistence.Column;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ExamDto {
     private String subjectName;

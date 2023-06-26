@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,8 +16,8 @@ public class ViewTaskDto {
     private Integer id;
     private String name;
     private String taskStatus;
-    private String taskType;
+    private LocalDateTime deadline;
     private String comment;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private Date createdAt;
+    private Date updatedAt;
 }
