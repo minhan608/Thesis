@@ -41,5 +41,5 @@ public class Exam {
     private Integer semester;
 
     @Column(name = "status")
-    private ExamStatus status;
+    private String status;
 }

@@ -27,7 +27,7 @@ public class TimeOffServiceImpl implements TimeOffService {
 
     @Override
     public ViewTimeOffDto createTime(TimeOffDto timeOffDto) {
-        TimeOff newTimeOff = TimeOff.builder().dateOff(LocalDate.now()).build();
+        TimeOff newTimeOff = TimeOff.builder().build();
         TimeOffConverter.mapTimeOffDtoToTimeOff(timeOffDto , newTimeOff);
         timeOffRepository.save(newTimeOff);
         return TimeOffConverter.convertTimeOffToTimeOffDTO(newTimeOff);

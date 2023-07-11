@@ -1,5 +1,8 @@
 package com.api.convert;
 
+import com.api.dto.exam.ExamDto;
+import com.api.dto.exam.ViewExamDto;
+import com.api.entity.Exam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -23,13 +26,13 @@ public class ExamConverter {
         patchObjectMapper = new ObjectMapper();
     }
 
-//    public static ViewDtcDataDTO convertDTCDataEntityToViewDTO(DtcData dtcDataEntity) {
-//        return viewDataMapper.map(dtcDataEntity, ViewDtcDataDTO.class);
-//    }
-//
-//    public static void mapSaveDtcDataDTOToDtcData(SaveDtcDataDTO saveDtcDataDTO, DtcData dtcData) {
-//        saveDataMapper.map(saveDtcDataDTO, dtcData);
-//    }
+    public static ViewExamDto convertExamToExamDto(Exam exam) {
+        return viewExam.map(exam, ViewExamDto.class);
+    }
+
+    public static void mapExamDtoToExam(ExamDto examDto, Exam exam) {
+        viewExam.map(examDto, exam);
+    }
 
     private static ModelMapper getViewDataMapper() {
         return getDefaultModelMapper();
