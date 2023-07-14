@@ -21,17 +21,25 @@ public class StudentRecord {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private  Integer id;
     @NotNull
-    private String studentId;
-
-    @NotNull
     private String studentName;
 
-    @Enumerated(EnumType.STRING)
-    private StudentStatus studentStatus;
+    @NotNull
+    private String studentId;
+
+    // @Enumerated(EnumType.STRING)
+    // private StudentStatus studentStatus;
+
+    private String status;
 
     @NotNull
     private Integer semester;
 
     @NotNull
     private Integer year;
+
+    private Integer noStudy;
+
+    private Integer noReserved;
+
+    private Integer noDrop;
 }

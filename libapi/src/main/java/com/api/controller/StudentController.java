@@ -19,15 +19,8 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam Integer semester, @RequestParam Integer year) throws Exception {
-        String message = "";
-        try {
-            studentService.saveStudentRecord(file,semester,year);
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-        }
+    public ResponseEntity<Void> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam Integer semester, @RequestParam Integer year) throws Exception {
+      studentService.saveStudentRecord(file,semester,year);
+      return new ResponseEntity<>(HttpStatus.OK);
     }
 }

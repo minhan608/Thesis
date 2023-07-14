@@ -2,6 +2,7 @@ package com.api.service.impl;
 
 import com.api.common.StudentStatus;
 import com.api.entity.StudentRecord;
+import com.api.exception.GlobalException;
 import com.api.repository.StudentRepository;
 import com.api.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -34,16 +35,15 @@ public class StudentServiceImpl implements StudentService {
             XSSFWorkbook wb = new XSSFWorkbook(file.getInputStream());
             XSSFSheet sheet = wb.getSheet("Sheet1");
             int rowIndex = 0;
+
             for (Row row : sheet){
                 if (rowIndex == 0){
                     rowIndex++;
                     continue;
                 }
-                if (StringUtils.isBlank(row.getCell(0).getStringCellValue())){
-                    break;
-                }
+
                 Iterator<Cell> cellIterator = row.iterator();
-                int cellIndex = 1;
+                int cellIndex = 0;
                 StudentRecord studentRecord = new StudentRecord();
                 studentRecord.setSemester(semester);
                 studentRecord.setYear(year);
@@ -57,7 +57,7 @@ public class StudentServiceImpl implements StudentService {
                             studentRecord.setStudentId(cell.getStringCellValue());
                             break;
                         case 3:
-                            studentRecord.setStudentStatus((StudentStatus.valueOf(cell.getStringCellValue().toUpperCase())));
+                            studentRecord.setStatus(cell.getStringCellValue());
                             break;
                         default:
                             break;
@@ -67,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
                 studentRepository.save(studentRecord);
             }
         } catch (Exception e) {
-            throw new Exception("fail to store excel data: " + e.getMessage());
+            throw new GlobalException("fail to store excel data: " + e.getMessage(),"Fail ");
         }
     }
 
