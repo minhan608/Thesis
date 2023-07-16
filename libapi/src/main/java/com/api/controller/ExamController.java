@@ -2,12 +2,15 @@ package com.api.controller;
 
 import com.api.dto.exam.ExamDto;
 import com.api.dto.exam.ViewExamDto;
+import com.api.entity.Exam;
 import com.api.service.ExamService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,5 +33,10 @@ public class ExamController {
     public ResponseEntity<Void> deleteExam( @PathVariable Integer id) throws NotFoundException {
         examService.deleteExam(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Exam>> getExam()  {
+        return new ResponseEntity<>(examService.getList(),HttpStatus.OK);
     }
 }

@@ -15,9 +15,4 @@ public class StudentDto {
 
     private String status;
 
-    private int noStudy;
-
-    private int noReserved;
-
-    private int noDrop;
 }

@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/task")
@@ -36,5 +38,10 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask( @PathVariable Integer id) throws NotFoundException {
         taskService.deleteTask(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Task>> getList() throws NotFoundException {
+        return new ResponseEntity<>(taskService.getList(),HttpStatus.OK);
     }
 }

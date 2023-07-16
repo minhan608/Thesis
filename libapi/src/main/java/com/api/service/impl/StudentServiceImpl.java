@@ -1,6 +1,10 @@
 package com.api.service.impl;
 
 import com.api.common.StudentStatus;
+import com.api.convert.StudentConverter;
+import com.api.dto.student.PagingStudentDto;
+import com.api.dto.student.StudentDto;
+import com.api.dto.student.StudentRecordDto;
 import com.api.entity.StudentRecord;
 import com.api.exception.GlobalException;
 import com.api.repository.StudentRepository;
@@ -12,11 +16,16 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -71,49 +80,48 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
-//    private void mappingDtcRecommendation(String recommend, Integer dtcId){
-//        if (StringUtils.isBlank(recommend)){
-//            return;
-//        }else if (!recommend.contains("\n")){
-//            Optional<Recommendation> recommendationOpt = recommendationRepository.findByDescription(recommend);
-//            if (recommendationOpt.isPresent()){
-//                DtcRecommendation dtcRecommendation = new DtcRecommendation();
-//                dtcRecommendation.setDtcData(dtcRepository.findById(dtcId).get());
-//                dtcRecommendation.setRecommendation(recommendationOpt.get());
-//                dtcRecommendationRepository.save(dtcRecommendation);
-//                dtcRecommendationRepository.save(dtcRecommendation);
-//            }
-//        } else{
-//            String[] split = recommend.split("\n");
-//            System.out.println(split[0].trim());
-//            System.out.println(split[1].trim());
-//            System.out.println("**************");
-//            for (int i = 0; i<split.length;i++){
-//                Optional<Recommendation> recommendationOpt = recommendationRepository.findByDescription(split[i].trim());
-//                if (recommendationOpt.isPresent()){
-//                    DtcRecommendation dtcRecommendation = new DtcRecommendation();
-//                    dtcRecommendation.setDtcData(dtcRepository.findById(dtcId).get());
-//                    dtcRecommendation.setRecommendation(recommendationOpt.get());
-//                    dtcRecommendationRepository.save(dtcRecommendation);
-//                    dtcRecommendationRepository.save(dtcRecommendation);
-//                }
-//            }
-//        }
-//    }
-//
-//    private List<DTCDataDTO> mapEntityToDTO(List<DtcData> listEntity){
-//        ModelMapper modelMapper = new ModelMapper();
-//        return listEntity.stream().map(entity -> modelMapper.map(entity, DTCDataDTO.class)).collect(Collectors.toList());
-//    }
-//
+    @Override
+    public List<StudentDto> getListStudent() {
+        List<StudentRecord> listStudent = studentRepository.findAll();
+        List<StudentDto> listDto = listStudent.stream()
+                .map(StudentConverter::convertRecordToStudentDto)
+                .collect(Collectors.toList());
+
+        return listDto;
+    }
+
+    @Override
+    public StudentRecordDto getRecord(){
+        StudentRecordDto studentRecordDto = new StudentRecordDto();
+        List<StudentDto> studentDtos = getListStudent();
+        int noStudy=0;
+        int noReserved=0;
+        int noDrop=0;
+        for (StudentDto student : studentDtos) {
+            String status = student.getStatus();
+
+            if (status.equals("Studying")) {
+                noStudy++;
+            } else if (status.equals("Reserved")) {
+                noReserved++;
+            } else if (status.equals("Dropped")) {
+                noDrop++;
+            }
+            studentRecordDto.setNoStudy(noStudy);
+            studentRecordDto.setNoReserved(noReserved);
+            studentRecordDto.setNoDrop(noDrop);
+        }
+        return studentRecordDto;
+    }
+
 //    @Override
-//    public PagingDTCDataDTO getListDtcData (Integer pageNumber, Integer pageSize){
+//    public PagingStudentDto getPaging (Integer pageNumber, Integer pageSize){
 //        Pageable paging = PageRequest.of(pageNumber - 1, pageSize);
-//        Page page = dtcRepository.findAll(paging);
-//        PagingDTCDataDTO pagingDTCDataDTO = new PagingDTCDataDTO();
-//        pagingDTCDataDTO.setPageSize(page.getSize());
-//        pagingDTCDataDTO.setTotalPage(page.getTotalPages());
-//        pagingDTCDataDTO.setListDtcDataDto(mapEntityToDTO(page.toList()));
+//        Page page = studentRepository.findAll(paging);
+//        PagingStudentDto pagingStudentDto = new PagingStudentDto();
+//        pagingStudentDto.setSize(page.getSize());
+//        pagingStudentDto.setPage(page.getTotalPages());
+//        pagingStudentDto.setListStudent(mapEntityToDTO(page.toList()));
 //        return pagingDTCDataDTO;
 //    }
 }

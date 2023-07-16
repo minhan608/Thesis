@@ -37,9 +37,4 @@ public class StudentRecord {
     @NotNull
     private Integer year;
 
-    private Integer noStudy;
-
-    private Integer noReserved;
-
-    private Integer noDrop;
 }

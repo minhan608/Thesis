@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -57,6 +58,11 @@ public class TaskServiceImpl implements TaskService {
             throw new GlobalException("Task not found", "Task not found", HttpStatus.NOT_FOUND);
         }
         taskRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Task> getList() {
+        return taskRepository.findAll();
     }
 
 }
