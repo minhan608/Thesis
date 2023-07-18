@@ -1,7 +1,6 @@
 package com.api.service.impl;
 
 import com.api.dto.SubjectDto;
-import com.api.entity.StudentRecord;
 import com.api.entity.Subject;
 import com.api.exception.GlobalException;
 import com.api.repository.SubjectRepository;
@@ -11,11 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
@@ -86,6 +83,42 @@ public class SubjectServiceImpl implements SubjectService {
         } catch (Exception e) {
             throw new GlobalException("fail to store excel data: " + e.getMessage(),"Fail ");
         }
+    }
+
+    @Override
+    public Subject getResultFromDb(){
+        List<Subject> subjects = subjectRepository.findAll();
+
+        int totalPassed = 0;
+        int totalFailed = 0;
+        int totalProhibited = 0;
+        int totalAbsent = 0;
+        int semester = 0;
+        int year = 0;
+        String name = StringUtils.EMPTY;
+        String teacher = StringUtils.EMPTY;
+
+        for (Subject subject : subjects) {
+            totalPassed += subject.getNoPassed();
+            totalFailed += subject.getNoFailed();
+            totalProhibited += subject.getNoProhibited();
+            totalAbsent += subject.getNoAbsent();
+            name = subject.getName();
+            teacher = subject.getTeacher();
+            year = subject.getYear();
+            semester = subject.getSemester();
+        }
+
+        Subject result = new Subject();
+        result.setNoPassed(totalPassed);
+        result.setNoFailed(totalFailed);
+        result.setNoProhibited(totalProhibited);
+        result.setNoAbsent(totalAbsent);
+        result.setTeacher(teacher);
+        result.setName(name);
+        result.setYear(year);
+        result.setSemester(semester);
+        return result;
     }
 
     @Override

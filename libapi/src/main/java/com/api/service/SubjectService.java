@@ -8,5 +8,7 @@ public interface SubjectService {
 
     void uploadExcel(MultipartFile file, String name, String teacher,int semester, int year ) throws  Exception;
 
+    Subject getResultFromDb();
+
     SubjectDto getResult(String name, String teacher, int semester, int year);
 }

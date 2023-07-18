@@ -12,6 +12,6 @@ public interface StudentService {
 
     List<StudentDto> getListStudent();
 
-    StudentRecordDto getRecord();
+    StudentRecordDto getRecord(int semesester, int year);
     
 }

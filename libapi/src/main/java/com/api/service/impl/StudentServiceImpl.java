@@ -90,10 +90,18 @@ public class StudentServiceImpl implements StudentService {
         return listDto;
     }
 
+    private List<StudentDto> getListStudentByYearSemester(int semester , int year) {
+        List<StudentRecord> listStudent = studentRepository.findAllBySemesterAndYear(semester,year);
+        List<StudentDto> listDto = listStudent.stream()
+                .map(StudentConverter::convertRecordToStudentDto)
+                .collect(Collectors.toList());
+        return listDto;
+    }
+
     @Override
-    public StudentRecordDto getRecord(){
+    public StudentRecordDto getRecord(int semester, int year){
         StudentRecordDto studentRecordDto = new StudentRecordDto();
-        List<StudentDto> studentDtos = getListStudent();
+        List<StudentDto> studentDtos = getListStudentByYearSemester(semester, year);
         int noStudy=0;
         int noReserved=0;
         int noDrop=0;

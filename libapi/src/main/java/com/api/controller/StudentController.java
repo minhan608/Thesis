@@ -31,7 +31,7 @@ public class StudentController {
     }
 
     @GetMapping("/record")
-    public ResponseEntity<StudentRecordDto> getRecord() {
-        return new ResponseEntity<>(studentService.getRecord(), HttpStatus.OK);
+    public ResponseEntity<StudentRecordDto> getRecord(@RequestParam ("semester") int semesester, @RequestParam ("year") int year) {
+        return new ResponseEntity<>(studentService.getRecord(semesester,year), HttpStatus.OK);
     }
 }

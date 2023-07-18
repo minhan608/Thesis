@@ -1,6 +1,7 @@
 package com.api.controller;
 
 import com.api.dto.SubjectDto;
+import com.api.entity.Subject;
 import com.api.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,13 @@ public class SubjectController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping
-    ResponseEntity<SubjectDto> getResult( @RequestParam("name") String name, @RequestParam("teacher") String teacher, @RequestParam("semester") int semester, @RequestParam("year") int year) throws Exception {
+    @GetMapping("/detail")
+    ResponseEntity<SubjectDto> getResultByProperty( @RequestParam("name") String name, @RequestParam("teacher") String teacher, @RequestParam("semester") int semester, @RequestParam("year") int year) throws Exception {
         return new ResponseEntity<>(subjectService.getResult(name,teacher,semester,year),HttpStatus.OK);
+    }
+
+    @GetMapping
+    ResponseEntity<Subject> getResult( ) {
+        return new ResponseEntity<>(subjectService.getResultFromDb(),HttpStatus.OK);
     }
 }
