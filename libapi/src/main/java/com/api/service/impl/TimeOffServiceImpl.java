@@ -41,7 +41,6 @@ public class TimeOffServiceImpl implements TimeOffService {
                 .orElseThrow(() -> new NotFoundException("Time Off of lecturer not found"));
 
         TimeOffConverter.mapTimeOffDtoToTimeOff(timeOffDto, timeOff);
-        timeOff.setDateOff(LocalDate.now());
         timeOff = timeOffRepository.save(timeOff);
         return TimeOffConverter.convertTimeOffToTimeOffDTO(timeOff);
     }
