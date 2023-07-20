@@ -19,4 +19,6 @@ public class ExamDto {
     private String teacher;
     private Integer semester;
     private String status;
+
+    private String comment;
 }

@@ -18,4 +18,6 @@ public class ViewExamDto {
     private String teacherName;
     private Integer semester;
     private String status;
+
+    private String comment;
 }

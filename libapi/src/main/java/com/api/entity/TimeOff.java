@@ -33,4 +33,7 @@ public class TimeOff {
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "comment")
+    private String comment;
 }
